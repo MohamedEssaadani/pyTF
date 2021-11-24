@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <body>
 
@@ -12,22 +13,10 @@
 <h2>Select your country</h2>
 <form method="post" action="/">
     <select name="country1" id="country1">
-        <option value="MAR" selected>Morocco</option>
-        <option value="FRA">France</option>
-        <option value="USA">USA</option>
-        <option value="ITA">Italy</option>
     </select>
     <select name="country2" id="country2">
-        <option value="MAR">Morocco</option>
-        <option value="FRA" selected>France</option>
-        <option value="USA">USA</option>
-        <option value="ITA">Italy</option>
     </select>
     <select name="country3" id="country3">
-        <option value="MAR">Morocco</option>
-        <option value="FRA">France</option>
-        <option value="USA">USA</option>
-        <option value="ITA" selected>Italy</option>
     </select>
     <input type="submit" value="ok">
 </form>
@@ -40,6 +29,54 @@
     <canvas id="myChart2"></canvas>
 </div>
 <script>
+
+    // GET COUNTRIES FROM API
+    var countries  = null
+    const getCountries = () => {
+     axios.get("https://restcountries.com/v3.1/all")
+     .then(response => {
+         countries = response.data;
+
+        // Fill Country 1 Options
+        var country1 = document.getElementById("country1")
+        var country2 = document.getElementById("country2")
+        var country3 = document.getElementById("country3")
+        for(let i=0; i<20; i++){
+            console.log(countries)
+               var opt = document.createElement("option");
+               opt.value= i;
+               opt.innerHTML = countries[i].name.common;
+               opt.value = countries[i].cca3;
+               country1.appendChild(opt);
+
+        };
+
+        // fill select country 2
+        for(let i=20; i<40; i++){
+            console.log(countries)
+               var opt = document.createElement("option");
+               opt.value= i;
+               opt.innerHTML = countries[i].name.common;
+               opt.value = countries[i].cca3;
+               country2.appendChild(opt);
+
+        };
+
+        // fill select country 3
+          for(let i=40; i<60; i++){
+            console.log(countries)
+               var opt = document.createElement("option");
+               opt.value= i;
+               opt.innerHTML = countries[i].name.common;
+               opt.value = countries[i].cca3;
+               console.log(opt)
+               country3.appendChild(opt);
+
+        };
+    })
+     .catch(error => console.error(error));
+    };
+    getCountries();
 
 
    var ctx = document.getElementById('myChart1').getContext('2d')

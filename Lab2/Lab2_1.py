@@ -53,7 +53,8 @@ def result():
     print(deathsCountry1, deathsCountry2, deathsCountry3)
 
     dateLabels = getDates(country1)
-
+    print('Dates')
+    print(dateLabels)
     return render_template("index.html", country1= country1, country2=country2, country3=country3, casesCountry1=casesCountry1, casesCountry2=casesCountry2, casesCountry3=casesCountry3, deathsCountry1= deathsCountry1, deathsCountry2= deathsCountry2, deathsCountry3= deathsCountry3, dateLabels = dateLabels)
 
 def getCases(country):
@@ -89,7 +90,7 @@ def getDates(country):
 # call bot
 @app.route("/bot")
 def covid_bot():
-
+    # getState()
     return "<h1> Hello Bot </h1>"
 
 
