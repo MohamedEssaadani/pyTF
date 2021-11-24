@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<body>
+
+<h1>Corona Statistics</h1>
+<h2>Select your country</h2>
+<form method="post" action="/">
+    <select name="country1" id="country1">
+        <option value="MAR" selected>Morocco</option>
+        <option value="FRA">France</option>
+        <option value="USA">USA</option>
+        <option value="ITA">Italy</option>
+    </select>
+    <select name="country2" id="country2">
+        <option value="MAR">Morocco</option>
+        <option value="FRA" selected>France</option>
+        <option value="USA">USA</option>
+        <option value="ITA">Italy</option>
+    </select>
+    <select name="country3" id="country3">
+        <option value="MAR">Morocco</option>
+        <option value="FRA">France</option>
+        <option value="USA">USA</option>
+        <option value="ITA" selected>Italy</option>
+    </select>
+    <input type="submit" value="ok">
+</form>
+
+<div>
+    <h2>Corona Cases</h2>
+    <canvas id="myChart1"></canvas>
+
+    <h2>Corona Deaths</h2>
+    <canvas id="myChart2"></canvas>
+</div>
+<script>
+
+
+   var ctx = document.getElementById('myChart1').getContext('2d')
+   var myChart1 = new Chart(ctx, {
+       type:'line',
+       data:{
+           labels: "{{dateLabels}}",
+           datasets:[
+               {
+                   label: '{{country1}}',
+                   data: "{{casesCountry1}}",
+                   borderColor: 'rgb(255,99, 132)',
+                   fill:false
+               },
+                {
+                   label: '{{country2}}',
+                   data: "{{casesCountry2}}",
+                   borderColor: 'rgb(99,255, 132)',
+                   fill:false
+               },
+                {
+                   label: '{{country3}}',
+                   data: "{{casesCountry3}}",
+                   borderColor: 'rgb(99, 132, 255)',
+                   fill:false
+               }
+           ]
+       },
+       options:{
+           maintainInAspectRatio: false
+       }
+   })
+
+   var ctx2 = document.getElementById('myChart2').getContext('2d')
+   var myChart2 = new Chart(ctx2, {
+       type:'line',
+       data:{
+           labels: "{{dateLabels}}",
+           datasets:[
+               {
+                   label: '{{country1}}',
+                   data: "{{deathsCountry1}}",
+                   borderColor: 'rgb(255,99, 132)',
+                   fill:false
+               },
+                {
+                   label: '{{country2}}',
+                   data: "{{deathsCountry2}}",
+                   borderColor: 'rgb(99,255, 132)',
+                   fill:false
+               },
+                {
+                   label: '{{country3}}',
+                   data: "{{deathsCountry3}}",
+                   borderColor: 'rgb(99, 132, 255)',
+                   fill:false
+               }
+           ]
+       },
+       options:{
+           maintainInAspectRatio: false
+       }
+   })
+</script>
+</body>
+</html>
