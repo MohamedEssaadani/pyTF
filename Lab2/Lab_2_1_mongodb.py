@@ -4,17 +4,16 @@
 # pip install pandas
 # pip install folium
 # pip install flask
-
+import flask
 import requests
 from bs4 import BeautifulSoup
 import pandas
 import folium
-from flask import Flask, render_template, request
-from pathlib import Path
-from utils.getTodayDate import getTodayDate
-import time
+from flask import Flask, render_template, request, jsonify
 import json
 from flask_pymongo import PyMongo
+from json import dumps
+from bson.json_util import dumps
 
 # create map object
 map = folium.Map(location=[33.5555, -7.7777], zoom_start=2)
@@ -28,18 +27,28 @@ map.save("templates/Map.html")
 app = Flask(__name__)
 
 # Connect to mongodb
-mongodb_client = PyMongo(app, uri="mongodb+srv://essaadani:essaadani@cluster0.4bfd9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+mongodb_client = PyMongo(app, uri="mongodb+srv://essaadani:essaadani@cluster0.4bfd9.mongodb.net/covidTracker?retryWrites=true&w=majority")
 db = mongodb_client.db
+
+
+
 
 file_name = "covid16112020 (1).json"
 
 # render
 @app.route("/", methods=['GET'])
 def hello_world():
-    return render_template("index.html")
+    return render_template("index2.html")
 
 @app.route("/", methods=['POST'])
 def result():
+    covidData = db.covidData.find({"geoId": request.form["country1"]})
+
+    for d in covidData:
+        print(d)
+
+    return render_template("index2.html", covidData=covidData)
+
     country1 = request.form["country1"]
     country2 = request.form["country2"]
     country3 = request.form["country3"]
@@ -61,7 +70,8 @@ def result():
     dateLabels = getDates(country1)
     print('Dates')
     print(dateLabels)
-    return render_template("index.html", country1= country1, country2=country2, country3=country3, casesCountry1=casesCountry1, casesCountry2=casesCountry2, casesCountry3=casesCountry3, deathsCountry1= deathsCountry1, deathsCountry2= deathsCountry2, deathsCountry3= deathsCountry3, dateLabels = dateLabels)
+   # return render_template("index.html", country1= country1, country2=country2, country3=country3, casesCountry1=casesCountry1, casesCountry2=casesCountry2, casesCountry3=casesCountry3, deathsCountry1= deathsCountry1, deathsCountry2= deathsCountry2, deathsCountry3= deathsCountry3, dateLabels = dateLabels)
+    return render_template("index.html", covidData=covidData, country1= country1, country2=country2, country3=country3, casesCountry1=casesCountry1, casesCountry2=casesCountry2, casesCountry3=casesCountry3, deathsCountry1= deathsCountry1, deathsCountry2= deathsCountry2, deathsCountry3= deathsCountry3, dateLabels = dateLabels)
 
 def getCases(country):
     with open(file_name) as json_file:

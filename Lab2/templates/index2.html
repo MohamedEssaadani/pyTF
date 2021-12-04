@@ -80,6 +80,7 @@
     };
     getCountries();
 
+    console.log({{covidData}})
 
    var ctx = document.getElementById('myChart1').getContext('2d')
    var myChart1 = new Chart(ctx, {
@@ -89,20 +90,8 @@
            datasets:[
                {
                    label: '{{country1}}',
-                   data: "{{casesCountry1}}",
+                   data: "{{covidData.cases}}",
                    borderColor: 'rgb(255,99, 132)',
-                   fill:false
-               },
-                {
-                   label: '{{country2}}',
-                   data: "{{casesCountry2}}",
-                   borderColor: 'rgb(99,255, 132)',
-                   fill:false
-               },
-                {
-                   label: '{{country3}}',
-                   data: "{{casesCountry3}}",
-                   borderColor: 'rgb(99, 132, 255)',
                    fill:false
                }
            ]
@@ -112,36 +101,6 @@
        }
    })
 
-   var ctx2 = document.getElementById('myChart2').getContext('2d')
-   var myChart2 = new Chart(ctx2, {
-       type:'line',
-       data:{
-           labels: "{{dateLabels}}",
-           datasets:[
-               {
-                   label: '{{country1}}',
-                   data: "{{deathsCountry1}}",
-                   borderColor: 'rgb(255,99, 132)',
-                   fill:false
-               },
-                {
-                   label: '{{country2}}',
-                   data: "{{deathsCountry2}}",
-                   borderColor: 'rgb(99,255, 132)',
-                   fill:false
-               },
-                {
-                   label: '{{country3}}',
-                   data: "{{deathsCountry3}}",
-                   borderColor: 'rgb(99, 132, 255)',
-                   fill:false
-               }
-           ]
-       },
-       options:{
-           maintainInAspectRatio: false
-       }
-   })
 </script>
 </body>
 </html>

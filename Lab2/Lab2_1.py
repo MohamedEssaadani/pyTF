@@ -30,6 +30,7 @@ file_name = "covid16112020 (1).json"
 # render
 @app.route("/", methods=['GET'])
 def hello_world():
+    # get countries from json
     return render_template("index.html")
 
 @app.route("/", methods=['POST'])
